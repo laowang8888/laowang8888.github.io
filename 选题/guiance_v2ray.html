@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sohoman.best","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="今天我们在日常生活中已经离不开搜索引擎的帮助，但是你是否曾经意识到自己在搜索框中输入过的每一个字符，都会被搜索引擎上传到远程服务器。经过搜索平台的大数据处理，用于给你推送更加精确的广告、反恐侦测、甚至成为查你家水表的电子证据（别在搜索引擎里查太敏感的信息，尤其是某度）。 我们日常所能见到的各大搜索引擎其实都并不保护用户的隐私，无论是国内的Baidu，还是Google、Bing，大家一方面要各为其主">
+<meta property="og:type" content="website">
+<meta property="og:title" content="高度隐私、反跟踪的匿名搜索引擎介绍">
+<meta property="og:url" content="http://sohoman.best/%E9%80%89%E9%A2%98/guiance_v2ray.html">
+<meta property="og:site_name" content="SOHO杂货铺">
+<meta property="og:description" content="今天我们在日常生活中已经离不开搜索引擎的帮助，但是你是否曾经意识到自己在搜索框中输入过的每一个字符，都会被搜索引擎上传到远程服务器。经过搜索平台的大数据处理，用于给你推送更加精确的广告、反恐侦测、甚至成为查你家水表的电子证据（别在搜索引擎里查太敏感的信息，尤其是某度）。 我们日常所能见到的各大搜索引擎其实都并不保护用户的隐私，无论是国内的Baidu，还是Google、Bing，大家一方面要各为其主">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://sohoman.best/images/search-engine-privacy/image-20200407223336690.png">
+<meta property="og:image" content="http://sohoman.best/images/search-engine-privacy/image-20200407224048262.png">
+<meta property="og:image" content="http://sohoman.best/images/search-engine-privacy/image-20200407224255959.png">
+<meta property="og:image" content="http://sohoman.best/images/search-engine-privacy/image-20200407225118461.png">
+<meta property="article:published_time" content="2019-10-23T07:47:09.000Z">
+<meta property="article:modified_time" content="2019-10-23T07:47:09.000Z">
+<meta property="article:author" content="梦游中的扎克">
+<meta property="article:tag" content="搜索引擎">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sohoman.best/images/search-engine-privacy/image-20200407223336690.png">
+
+<link rel="canonical" href="http://sohoman.best/%E9%80%89%E9%A2%98/guiance_v2ray">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>高度隐私、反跟踪的匿名搜索引擎介绍 | SOHO杂货铺
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SOHO杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">坚定Soho人生路，汇集外贸、副业、网赚各种资讯和路子</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page">
+            
+
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">高度隐私、反跟踪的匿名搜索引擎介绍
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>今天我们在日常生活中已经离不开搜索引擎的帮助，但是你是否曾经意识到自己在搜索框中输入过的每一个字符，都会被搜索引擎上传到远程服务器。经过搜索平台的大数据处理，用于给你推送更加精确的广告、反恐侦测、甚至成为查你家水表的电子证据（别在搜索引擎里查太敏感的信息，尤其是某度）。</p>
+<p>我们日常所能见到的各大搜索引擎其实都并不保护用户的隐私，无论是国内的Baidu，还是Google、Bing，大家一方面要各为其主（政府希望监控国民几乎是世界范围内的普遍现象，并不仅仅是中国），另一方面也都要为自家的盈利来考虑，毕竟都是要恰饭的嘛（这一方面某度就要比其他家无良无底线的多了）。</p>
+<p>这个世界上，只要有了一个很多人都关心的问题，就一定会蹦出几个勇敢的家伙解决问题。于是，在各大主流搜索引擎之外，兴起了一类主打“高度隐私、无广告、不追踪用户信息”的匿名搜索引擎。今天这篇文章里就给大家介绍下这其中的一些经典产品。</p>
+<h4 id="1：DuckDuckGo"><a href="#1：DuckDuckGo" class="headerlink" title="1：DuckDuckGo"></a>1：<strong>DuckDuckGo</strong></h4><p>DuckDuckGo可以说是全球最著名的匿名搜索引擎（虽然未必是最好用的），作为一只有个性的鸭子（搜索引擎），它的定位是“把隐私放在第一位”。为此其不会存储用户的IP地址、记录用户的信息、当用户要求在客户端存储Cookies时才会设置之（一般用户哪有人懂这个的，所以默认使用都是安全的）。网址： <a href="https://duckduckgo.com/" target="_blank" rel="noopener">https://duckduckgo.com/</a></p>
+<p><img src="/images/search-engine-privacy/image-20200407223336690.png" alt="image-20200407223336690"></p>
+<a id="more"></a>
+
+<h4 id="2：Startpage"><a href="#2：Startpage" class="headerlink" title="2：Startpage"></a>2：Startpage</h4><p>代替Google搜索的最好选择。StartPage是一荷兰公司Startpage B.V.所推出的搜索引擎服务，号称是世界上最私密的搜索引擎。它的底层其实仍然使用Google搜索，只是不把用户的关键词、Cookie、IP等隐私信息暴露给Google，所以非常类似一个“搜索引擎代理”。但也正因为这种实现原理，它可以算是Google+高度隐私，同时兼顾了隐私安全和搜索质量。网址：<a href="https://www.startpage.com/" target="_blank" rel="noopener">https://www.startpage.com/</a></p>
+<p><img src="/images/search-engine-privacy/image-20200407224048262.png" alt="image-20200407224048262"></p>
+<h4 id="3：DogeDoge-多吉搜索"><a href="#3：DogeDoge-多吉搜索" class="headerlink" title="3：DogeDoge 多吉搜索"></a>3：<strong>DogeDoge</strong> 多吉搜索</h4><p>国内个人开发者的作品，界面非常简单，网站Slogan “不追踪，不误导” 写得非常棒，真心值得国内某大厂好好学学，不要一心只知道跟着莆田老板割韭菜，误导网民（尤其是一些性命攸关的情况下）。</p>
+<p>注重隐私，不会追踪用户的使用记录，支持部分即时结果显示，目前仍然在不断完善之中，值得国人多多关注和支持。网址：<a href="https://www.dogedoge.com/" target="_blank" rel="noopener">https://www.dogedoge.com/</a></p>
+<p><img src="/images/search-engine-privacy/image-20200407224255959.png" alt="image-20200407224255959"></p>
+<h4 id="4：Lookao"><a href="#4：Lookao" class="headerlink" title="4：Lookao"></a>4：<strong>Lookao</strong></h4><p>和Doge类似也是国内开发者的作品，是一款轻量简洁的搜索引擎，不会收集用户的隐私或是追踪我们的上网行为。也不会根据浏览记录来干预搜索排名，让搜索更加纯粹。网址：<a href="https://lookao.com/" target="_blank" rel="noopener">https://lookao.com/</a></p>
+<p><img src="/images/search-engine-privacy/image-20200407225118461.png" alt="image-20200407225118461"></p>
+<h4 id="5：想保护你的隐私，很难"><a href="#5：想保护你的隐私，很难" class="headerlink" title="5：想保护你的隐私，很难"></a>5：<strong>想保护你的隐私，很难</strong></h4><p>在今天这个时代，我们真的想要完全保护自己的隐私不被任何网址、APP所侦查，其实真的很难很难。文章中所介绍了匿名搜索引擎其实仅仅占据你日常网络生活中微不足道的一点而已。</p>
+<p>等博主他日有闲暇的时候，再写一篇如何系统化保护自己隐私信息的文章吧。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80OTI2NC8yNTc1OA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1：DuckDuckGo"><span class="nav-number">1.</span> <span class="nav-text">1：DuckDuckGo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2：Startpage"><span class="nav-number">2.</span> <span class="nav-text">2：Startpage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3：DogeDoge-多吉搜索"><span class="nav-number">3.</span> <span class="nav-text">3：DogeDoge 多吉搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4：Lookao"><span class="nav-number">4.</span> <span class="nav-text">4：Lookao</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5：想保护你的隐私，很难"><span class="nav-number">5.</span> <span class="nav-text">5：想保护你的隐私，很难</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="梦游中的扎克"
+      src="/coreimages/head1.jpg">
+  <p class="site-author-name" itemprop="name">梦游中的扎克</p>
+  <div class="site-description" itemprop="description">人生苦短，切莫荒废于实现他人的梦想</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Copy Right by Zach</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
