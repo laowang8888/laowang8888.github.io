@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="baidu-site-verification" content="MaKbFdmHKq">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sohoman.best","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="想要正常的访问一些被大陆屏蔽掉的网站或者APP，例如：Instagram、Youtube（国内昵称油管），就需要通过技术手段使你的网络可以突破国内的网络审查，也就是大家耳耳熟能详的：“科学上网”、“翻墙”、“梯子”，“加速器”，“VPN代理” 等等（最专业的说法应该叫做“网络代理”）。 本文教大家安装一种常见的翻墙工具，Shadowsocks，非常适合喜欢动手的同学们钻研使用。每个月服务器成本大概">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020年科学上网，从零开始安装Shadowsocks服务">
+<meta property="og:url" content="https://sohoman.best/ss-guide/index.html">
+<meta property="og:site_name" content="SOHO杂货铺">
+<meta property="og:description" content="想要正常的访问一些被大陆屏蔽掉的网站或者APP，例如：Instagram、Youtube（国内昵称油管），就需要通过技术手段使你的网络可以突破国内的网络审查，也就是大家耳耳熟能详的：“科学上网”、“翻墙”、“梯子”，“加速器”，“VPN代理” 等等（最专业的说法应该叫做“网络代理”）。 本文教大家安装一种常见的翻墙工具，Shadowsocks，非常适合喜欢动手的同学们钻研使用。每个月服务器成本大概">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sohoman.best/images/ss-guide/1*FJDAw-zih10ktQ4MdicL0A.png">
+<meta property="og:image" content="https://sohoman.best/images/ss-guide/1*6nBHkzNMf_0huI-0C8eh9Q.png">
+<meta property="og:image" content="https://sohoman.best/images/ss-guide/1*bd4e0RoZ7UKybYmP00aXuw.png">
+<meta property="og:image" content="https://sohoman.best/images/tools-science/image-20200411173253716.png">
+<meta property="og:image" content="https://sohoman.best/images/tools-science/android_finish-0673128.jpg">
+<meta property="article:published_time" content="2020-08-03T15:17:39.000Z">
+<meta property="article:modified_time" content="2020-09-04T08:21:27.000Z">
+<meta property="article:author" content="梦游中的扎克">
+<meta property="article:tag" content="Facebook">
+<meta property="article:tag" content="Google">
+<meta property="article:tag" content="Instagram">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="Youtube">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sohoman.best/images/ss-guide/1*FJDAw-zih10ktQ4MdicL0A.png">
+
+<link rel="canonical" href="https://sohoman.best/ss-guide/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2020年科学上网，从零开始安装Shadowsocks服务 | SOHO杂货铺</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164116634-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-164116634-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SOHO杂货铺</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">坚定Soho人生路，汇集外贸、副业、网赚各种资讯和路子</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sohoman.best/ss-guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/coreimages/head1.jpg">
+      <meta itemprop="name" content="梦游中的扎克">
+      <meta itemprop="description" content="人生苦短，切莫荒废于实现他人的梦想">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SOHO杂货铺">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2020年科学上网，从零开始安装Shadowsocks服务
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-03 23:17:39" itemprop="dateCreated datePublished" datetime="2020-08-03T23:17:39+08:00">2020-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-04 16:21:27" itemprop="dateModified" datetime="2020-09-04T16:21:27+08:00">2020-09-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" itemprop="url" rel="index"><span itemprop="name">科学上网</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>想要正常的访问一些被大陆屏蔽掉的网站或者APP，例如：Instagram、Youtube（国内昵称油管），就需要通过技术手段使你的网络可以突破国内的网络审查，也就是大家耳耳熟能详的：“科学上网”、“翻墙”、“梯子”，“加速器”，“VPN代理” 等等（最专业的说法应该叫做“网络代理”）。</p>
+<p>本文教大家安装一种常见的翻墙工具，Shadowsocks，非常适合喜欢动手的同学们钻研使用。每个月服务器成本大概几十块钱，如果比较懒的，最好还是使用专业的网络加速服务商比较简单，比如<a href="https://a.normancloud.com/aff?aff_code=TP4R6" target="_blank" rel="noopener external nofollow noreferrer"><font color=blue>诺曼云加速器</font></a> 。</p>
+</font> 
+
+<a id="more"></a>
+
+<h4 id="1-注册一个VPS"><a href="#1-注册一个VPS" class="headerlink" title="1. 注册一个VPS"></a>1. 注册一个VPS</h4><p>首先，我们要选择一家国外的提供商。我使用过的国外的服务有DigtalOcean（后面简称为DO）、vultr、Linode。每家的机器都差不太多，选择一台配置普通点的机器就可以了。一般来说都需要Paypal或者信用卡付款。比如这里使用的是Vultr的服务器。</p>
+<p><img src="../images/ss-guide/1*FJDAw-zih10ktQ4MdicL0A.png" alt="Image for post"></p>
+<p>如图所示，这里作者推荐日本的机器，北京联通非常的稳定可靠，经历了风风雨雨，目前为止还没有封，机器系统选择Ubuntu14.04（这个是根据个人喜好），但是后面的讲解中使用的命令都是用到Ubuntu的命令，所以推荐小白用户选择此系统，后面还有<strong>Additional Features</strong>, <strong>Startup Script</strong> , <strong>SSH Keys</strong> , <strong>Server Hostname &amp; Label</strong>选项，这些配置各位可以根据自己的需要进行相关的配置，选购完你的机器后就可以deploy你的VPS了。</p>
+<p>等待Servers列表你的机器的<code>Status</code>的状态变成了running状态后，点击该机器，进入机器详细介绍页，如图所示</p>
+<p><img src="../images/ss-guide/1*6nBHkzNMf_0huI-0C8eh9Q.png" alt="Image for post"></p>
+<p>点击Password查看密码，在你的电脑上打开命令行工具，输入：ssh root@服务器的Ip地址。你就拥有了对这个台VPS的root控制权限了。</p>
+<h4 id="2-搭建shadowsocks服务"><a href="#2-搭建shadowsocks服务" class="headerlink" title="2. 搭建shadowsocks服务"></a>2. 搭建shadowsocks服务</h4><p>输入密码后，接着在命令行键入一下命令，开启你的ss服务。我们将会安装python版本的shadowsocks，需要先在这台机器上安装pip管理工具：apt-get install python-pip。</p>
+<p>然后通过pip来安装shadowsocks，命令为：pip install shadowsocks。当你看到如下画面时，表示你的ss安装成功。这时，你可以尝试在命令行中键入<code>ssserver</code>命令，查看是否安装成功，安装成功的话就可以进入下一步的操作。</p>
+<p><img src="../images/ss-guide/1*bd4e0RoZ7UKybYmP00aXuw.png" alt="Image for post"></p>
+<h4 id="3-启动shadowsocks服务"><a href="#3-启动shadowsocks服务" class="headerlink" title="3. 启动shadowsocks服务"></a>3. 启动shadowsocks服务</h4><p>开启ss服务有两种方法，一种是通过在命令行中输入参数，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -p 8388 -k password -m aes-256-cfb</span><br></pre></td></tr></table></figure>
+
+<p>另外一种方法就是通过配置文件启动，先在VPS的/usr/etc/conf/目录下新建一个ss.conf.json文件，写入如下的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;server&quot;:&quot;my_server_ip&quot;,</span><br><span class="line">	&quot;server_port&quot;:8388,</span><br><span class="line">	&quot;local_address&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">	&quot;local_port&quot;:1080,</span><br><span class="line">	&quot;password&quot;:&quot;mypassword&quot;,</span><br><span class="line">	&quot;timeout&quot;:300,</span><br><span class="line">	&quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">	&quot;fast_open&quot;: false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述每一个配置文件每个字段的意义如下：</p>
+<p>然后进入你的配置文件的目录，执行以下命令即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c ss.conf.json</span><br></pre></td></tr></table></figure>
+
+<p>命令启动成功，如果你想在后台运行ss服务，需要输入如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssserver -c ss.conf.json -d start</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-安装shadowsocks客户端"><a href="#4-安装shadowsocks客户端" class="headerlink" title="4. 安装shadowsocks客户端"></a>4. 安装shadowsocks客户端</h4><p>因为各个系统繁杂，其中配置各不相同，笔者也不能一一覆盖到。如果读者不知道改选择什么客户端 ，或者不会是使用。可以登录NormanCloud的官网，可以查看到他们官方推荐的全平台客户端，以及使用指导和教程。对于小白用户而言还是蛮友好的。</p>
+<h4 id="5-使用专业平台的服务"><a href="#5-使用专业平台的服务" class="headerlink" title="5. 使用专业平台的服务"></a>5. 使用专业平台的服务</h4><p>有许多专业平台也在提供网络代理服务，相比于个人搭建而言，平台提供的代理服务器线路更多，稳定性也更强。此外还会有一些额外的好处，比如：有些服务平台提供流媒体解锁，可以看Netflix、HBO、Hulu这些有IP限制的流媒体网站。</p>
+<p>网络代理平台每月的售价一般在20 - 30 之间，和自己私人搭建所需要付出的成本基本相当。但是性价比明显更高一些。这里就以其中的一家 “诺曼加速器” 为例给大家介绍下如何实现科学上网。</p>
+<p><font color=red>诺曼云加速器（NormanCloud.com）</font>是一家使用v2ray网络代理技术（一种比较新的代理技术，国内稳定性好）的网络代理服务商，支持所有平台使用：Android、iPhone、Windows或者Mac。使用博主的邀请码（<font color=red>TP4R6</font>）或者点邀请链接：<a href="https://a.normancloud.com/aff?aff_code=TP4R6" target="_blank" rel="noopener external nofollow noreferrer"><font color=red>诺曼云官网，点击前往</font></a> 注册，可以得到5块钱的初始体验资金。可以用于购买体验套餐，免费用一段时间。</p>
+<p><font color=#3b90f7>这家服务商技术实力比较强，他们有自己研发的客户端软件和APP（目前已经上线的好像只有Android版本）。尽量使用他们家的官方APP，简单方便很多，也更稳定。许多第三方的客户端软件要么不够稳定，要么使用很繁琐（比如需要添加订阅、手动更新订阅等等操作），要么会有一些安全隐私方面的风险。</font></p>
+<p>在诺曼云的会员中心页面，你可以看到自己会员等级（需要先去会员商店，用体验资金买一个体验套餐），账户里的余额，剩下可以用的流量等等信息。</p>
+<p><img src="../images/tools-science/image-20200411173253716.png" alt="image-20200411173253716"></p>
+<p>你可以在快速使用面板找到适用于各种平台的客户端软件。<font color=#3b90f7>比如你需要在Android手机上翻墙，可以在手机浏览器上输入他们的网站：<a href="https://normancloud.com" target="_blank" rel="noopener external nofollow noreferrer">https://normancloud.com</a></font>，然后下载他们的官方APP（你也可以在他们网站找到其他第三方APP），把APK文件下载到手机上直接点击安装就行了。</p>
+<p><img src="../images/tools-science/android_finish-0673128.jpg" alt="android_finish"></p>
+<p>网站上所有软件都有相应的教程可以查看，按照教程的每一步，进行操作完成设置就可以开始科学上网了。</p>
+<p>诺曼云的会员主要分成两个等级V1和V2，对于只需要简单上上网的人而言，买个V1就足够使用了。根据不同套餐里包含的流量的不同，价格基本在15-25元/月之间。如果你是经常上网看剧看视频，那么流量最好买足一些。如果是以浏览网页为主，那么买他们的低流量套餐就够用了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/facebook/" rel="tag"># Facebook</a>
+              <a href="/tags/google/" rel="tag"># Google</a>
+              <a href="/tags/instagram/" rel="tag"># Instagram</a>
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+              <a href="/tags/youtube/" rel="tag"># Youtube</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/free-phone/" rel="prev" title="2020年还没有美国手机号？教你免费注册国外电话号。">
+      <i class="fa fa-chevron-left"></i> 2020年还没有美国手机号？教你免费注册国外电话号。
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/project-funs/" rel="next" title="饭圈生意模式，赚粉丝们的钱">
+      饭圈生意模式，赚粉丝们的钱 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80OTI2NC8yNTc1OA=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-注册一个VPS"><span class="nav-number">1.</span> <span class="nav-text">1. 注册一个VPS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-搭建shadowsocks服务"><span class="nav-number">2.</span> <span class="nav-text">2. 搭建shadowsocks服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-启动shadowsocks服务"><span class="nav-number">3.</span> <span class="nav-text">3. 启动shadowsocks服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-安装shadowsocks客户端"><span class="nav-number">4.</span> <span class="nav-text">4. 安装shadowsocks客户端</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-使用专业平台的服务"><span class="nav-number">5.</span> <span class="nav-text">5. 使用专业平台的服务</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="梦游中的扎克"
+      src="/coreimages/head1.jpg">
+  <p class="site-author-name" itemprop="name">梦游中的扎克</p>
+  <div class="site-description" itemprop="description">人生苦短，切莫荒废于实现他人的梦想</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Copy Right by Zach</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
